@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Tower Defense Game</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono">
+		<script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body style="background-color:#0a5d00;">
+		<h1 style="all:unset; position:absolute; left:61%; font-size:20px; color:#fff;">Helpful Tips: To Start A New Round Early, Press the Red Square in the Corner of the Build Menu,
+			To Speed Up the Game, Press the Light Blue Square, and to Slow it after Press it again</h1>
+		<div id="pages">
+			<canvas id="pages-canvas" width="800" height="500" style="border:5px solid #ffffff69;"></canvas>
+			
+			<div id="pages-overlay"></div>
+			
+			<div id="pages-start" style="border:5px solid #ffffff71;">
+				<div id="pages-start-maps">
+					<a><img src="images/maps/loopy.png" width="80" height="50">Loopy</a>
+					<a><img src="images/maps/backtrack.png" width="80" height="50">Backtrack</a>
+					<a><img src="images/maps/dash.png" width="80" height="50">Dash</a>
+				</div>
+				
+				<div id="pages-start-info">
+					<h2>Instructions</h2>
+					<p>Build and upgrade turrets to kill enemies.</p>
+						 
+					
+					<h2>Shortcuts</h2>
+					<dl>
+						<dt><kbd>1</kbd></dt>
+						<dd>Build Laser / Upgrade damage</dd>
+						
+						<dt><kbd>2</kbd></dt>
+						<dd>Build Cannon / Upgrade rate</dd>
+						
+						<dt><kbd>3</kbd></dt>
+						<dd>Build Landmine / Upgrade range</dd>
+						
+						<dt><kbd>4</kbd></dt>
+						<dd>Build Mortar / Move</dd>
+						
+						<dt><kbd>*</kbd></dt>
+						<dd>Sell</dd>
+						
+						<dt><kbd>=</kbd></dt>
+						<dd>Fast forward</dd>
+						
+						<dt><kbd>Esc</kbd></dt>
+						<dd>Deselect / Cancel / Pause</dd>
+						
+						<dt><kbd>Enter</kbd></dt>
+						<dd>Send wave</dd>
+					</dl>
+					
+					
+				</div>
+			</div>
+			
+			<div id="pages-scores">
+				<h3>Loopy</h3>
+				<h3>Backtrack</h3>
+				<h3>Dash</h3>
+				
+				<ul id="pages-scores-twitter-loopy"></ul>
+				<ul id="pages-scores-twitter-backtrack"></ul>
+				<ul id="pages-scores-twitter-dash"></ul>
+				
+				<ul id="pages-scores-local-loopy"></ul>
+				<ul id="pages-scores-local-backtrack"></ul>
+				<ul id="pages-scores-local-dash"></ul>
+				
+				<a data-page="" id="pages-scores-back">←</a>
+			</div>
+			
+		</div>
+		
+		<div id="control" style="border:5px solid #ffffff6b;">
+			<div id="control-left">
+				<div id="control-turrets">
+					<a data-name="Laser"><img src="images/turrets/laser.png" width="25" height="25"><br>Laser (£15)</a>
+					<a data-name="Cannon"><img src="images/turrets/cannon.png" width="25" height="25"><br>Cannon (£25)</a>
+					<a data-name="Landmine"><img src="images/turrets/landmine.png" width="25" height="25"><br>Landmine (£40)</a>
+					<a data-name="Mortar"><img src="images/turrets/mortar.png" width="25" height="25"><br>Mortar (£60)</a>
+				</div>
+
+				<div id="control-manage">
+					<a id="control-manage-damage"></a>
+					<a id="control-manage-rate"></a>
+					<a id="control-manage-range"></a>
+					<a id="control-manage-move">Move<br>£90</a>
+					<a id="control-manage-sell"></a>
+					<div id="control-manage-stats"></div>
+				</div>
+
+				<div id="control-score">
+					Game over! You scored <span id="control-score-text"></span>.<br><br>
+					<a href="">Play again</a> or <a data-page="scores">view scores</a>
+				</div>
+			</div>
+			
+			<div id="control-right">
+				<div id="control-right-1">
+					<a id="control-timer"></a>
+					<a id="control-fast"></a>
+				</div>
+				
+				<div id="control-right-2">
+					Cash £<span id="control-cash">35</span><br>
+					Lives <span id="control-lives">10</span><br>
+					Wave #<span id="control-wave">1</span>
+				</div>
+				
+				<div id="control-right-3">
+					<span id="control-fps">60</span>FPS<br>
+					<a id="control-pause">Pause</a><br>
+					<a href="">Reset</a>
+				</div>
+			</div>
+		</div>
+		
+		<script src="scripts/utils.js"></script>
+		<script src="scripts/defs.js"></script>
+		<script src="scripts/game.js"></script>
+		<script src="scripts/ui.js"></script>
+		<script src="scripts/sc.js"></script>
+	</body>
+<div class="advanced-audio-player">       <!--with help from google-->
+<audio id="myAudio" controls>
+<source src="gamemusic.wav" type="audio/wav">
+Your browser does not support the audio element.
+</audio>
+<button onclick="toggleLoop()">Loop Current Song</button>
+<button onclick="playNextTrack()">Play Next Song</button>
+</div>
+
+<script>
+var audio = document.getElementById('myAudio');
+var tracks = ['gamemusic1.wav', 'gamemusic2.wav', 'gamemusic3.wav',  'gamemusic4.wav'];  /*best music selection*/
+var currentTrackIndex = 0;
+
+function toggleLoop() {
+audio.loop = !audio.loop;
+}
+
+function playNextTrack() {
+currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+playTrack(tracks[currentTrackIndex]);
+}
+
+function playTrack(track) {
+audio.src = track;
+audio.play();
+}
+
+audio.addEventListener('ended', function() {
+if (!audio.loop) {
+playNextTrack();
+}
+});
+</script>
+​
+</html>
+
+
+<style>/* Global*/
+
+a {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	color: #ffF;
+	cursor: pointer;
+	text-decoration: none;
+	user-select: none;
+}
+
+body {
+	-moz-box-shadow: 0 0 10px #000;
+	-webkit-box-shadow: 0 0 10px #000;
+	box-shadow: 0 0 10px #000;
+	display: inline-block;
+	margin: 10px;
+}
+body, kbd {
+	font: 12px "Droid Sans Mono", monospace;
+}
+
+dt {
+	clear: left;
+	float: left;
+	width: 50px;
+}
+dd {
+	float: left;
+}
+
+h2, h3 {
+	font-weight: normal;
+}
+h2 {
+	margin-bottom: 10px;
+}
+h3 {
+	text-align: center;
+}
+
+p {
+	margin-bottom: 30px;
+}
+
+ul {
+	list-style: none;
+}
+
+#pages > * {
+	background-color: #524e4e;
+	display: none;
+	position: absolute;
+}
+
+
+
+/* Start page*/
+
+#pages-start {
+	display: block;
+	height: 450px;
+	padding: 50px;
+	width: 700px;
+}
+
+#pages-start-maps {
+	float: left;
+}
+#pages-start-maps > a {
+	display: block;
+	margin-bottom: 20px;
+	text-align: center;
+}
+#pages-start-maps > a > img {
+	-moz-box-shadow: 0 0 5px #000;
+	-webkit-box-shadow: 0 0 5px #000;
+	box-shadow: 0 0 5px #000;
+	display: block;
+	height: 50px;
+	width: 80px;
+}
+
+#pages-start-info {
+	float: right;
+	height: 450px;
+	text-align: justify;
+	width: 350px;
+	color: #fff;
+}
+#pages-start-links {
+	bottom: 5px;
+	position: absolute;
+}
+
+
+
+/* Overlay page*/
+
+#pages-overlay {
+	height: 550px;
+	opacity: 0.3;
+	width: 800px;
+}
+
+
+
+/* Scores page*/
+
+#pages-scores {
+	height: 550px;
+	width: 800px;
+	z-index: 1;
+}
+
+#pages-scores > h3, #pages-scores > ul {
+	display: inline-block;
+	margin: 5px 0;
+	padding: 0 10px;
+	vertical-align: top;
+	width: 245px; /* should be 246px? (Jacks choice) */
+}
+
+#pages-scores > :nth-child(3n+2) {
+	border: solid #DDD;
+	border-width: 0 1px;
+	margin: 5px -7px;
+}
+
+#pages-scores > ul {
+	font-size: 10px;
+}
+
+#pages-scores > ul > li > a {
+	-o-text-overflow: ellipsis;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	width: 90px;
+}
+
+#pages-scores-back {
+	left: 10px;
+	position: absolute;
+	top: 5px;
+}
+
+#pages-scores-twitter-backtrack {
+	height: 434px;
+}
+
+#pages-scores-local-backtrack {
+	height: 70px;
+}
+
+
+
+/* About page*/
+
+#pages-about {
+	height: 530px;
+	padding: 10px;
+	text-align: justify;
+	width: 780px;
+}
+
+#pages-about-logo {
+	display: block;
+	margin: 45px auto 0 auto;
+}
+
+#pages-about-back {
+	bottom: 5px;
+	left: 10px;
+	position: absolute;
+}
+
+
+
+/* Control panel*/
+
+#control {
+	background-color: #6e6969;
+	font-size: 10px;
+	height: 44px;
+	margin-top: 500px;
+	padding: 4px 6px 2px 6px;
+	width: 788px;
+}
+
+#control-left {
+	float: left;
+}
+#control-left > div {
+	display: none;
+}
+
+#control-turrets > a {
+	float: left;
+	text-align: center;
+	width: 90px;
+}
+
+#control-manage > a, #control-manage-stats {
+	border: 1px solid #00F;
+	float: left;
+	height: 30px;
+	margin: 5px;
+	text-align: center;
+	width: 75px;
+}
+#control-manage-stats {
+	border-color: #000;
+}
+
+#control-score {
+	position: relative;
+}
+
+#control-right {
+	float: right;
+}
+
+#control-right-1, #control-right-2, #control-right-3 {
+	float: left;
+}
+
+#control-timer {
+	background-color: #F00;
+	display: block;
+	height: 20px;
+	margin-bottom: 2px;
+	width: 20px;
+}
+
+#control-fast {
+	background-color: #85ADE6;
+	display: block;
+	height: 20px;
+	width: 20px;
+}
+
+#control-right-2 {
+	border: solid #CCC;
+	border-width: 0 1px;
+	margin: 0 10px;
+	min-width: 60px;
+	padding: 0 10px;
+}
+
+
+.advanced-audio-player {
+  width: 300px;
+  background-color: #692828;
+  border: 1px solid #3cff00;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 auto;
+  position: relative;
+  bottom: 400px;
+  left: 800px;
+}
+
+.advanced-audio-player audio {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.advanced-audio-player button {
+  width: 100%;
+  background-color: #53b313;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.advanced-audio-player button:hover {
+  background-color: #37760d;
+}</style>
