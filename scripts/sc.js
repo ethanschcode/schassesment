@@ -1,5 +1,5 @@
 const pressed = [];
-const secretCode = 'howabtno';
+const secretCode = 'supchat';
 
 
 
