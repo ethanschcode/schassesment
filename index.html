@@ -8,7 +8,6 @@
 		<link rel="stylesheet" href="index.css">
 	</head>
 	<body style="background-color:#0a5d00;">
-		 <img id="splash-image" src="images/logo.png" alt="Splash" />
 		<h1 style="all:unset; position:absolute; left:61%; font-size:20px; color:#fff;">Helpful Tips: To Start A New Round Early, Press the Red Square in the Corner of the Build Menu,
 			To Speed Up the Game, Press the Light Blue Square, and to Slow it after Press it again</h1>
 		<div id="pages">
@@ -126,20 +125,6 @@
 		<script src="scripts/game.js"></script>
 		<script src="scripts/ui.js"></script>
 		<script src="scripts/sc.js"></script>
-
-		 <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      // Start fade out after a short delay (optional)
-      setTimeout(function() {
-        document.getElementById('splash-image').classList.add('hide');
-      }, 100); // Start almost immediately
-
-      // After transition, remove splash image (optional)
-      document.getElementById('splash-image').addEventListener('transitionend', function() {
-        this.style.display = 'none';
-      });
-    });
-  </script>
 	</body>
 <div class="advanced-audio-player">       <!--with help from google-->
 <audio id="myAudio" controls>
